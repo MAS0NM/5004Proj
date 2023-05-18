@@ -1,3 +1,5 @@
+''' record the xy and y coordinates data for 3d reconstruction'''
+
 from cvzone.HandTrackingModule import HandDetector
 import cv2
 import tkinter as tk
