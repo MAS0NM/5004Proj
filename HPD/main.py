@@ -7,8 +7,9 @@ import math
 import numpy as np
 from LengthBasedCalibrator_inf import lengthBased_inf
 from HandPoseBasedCalibrator_inf import handPoseBased_inf
-from MiDaS_depth_inf import MiDaS_based_inf
+# from MiDaS_depth_inf import MiDaS_based_inf
 from DepthCalibrator import depthBased_inf
+import joblib
 cap = cv2.VideoCapture(0)
 cap.set(3, 1280)
 cap.set(4, 720)
@@ -22,9 +23,10 @@ serverAddressPort = ("127.0.0.1", 5052)
 counter = 0
 # inf = inference()
 
-calibrator = 'depth_based'
+calibrator = 'length_based'
 # calibrator = 'length_based'
 cali_inf = depthBased_inf(mode=calibrator)
+clf = joblib.load('svm_clf.pkl')
 while True:
     # Get image frame
     success, img = cap.read()
@@ -50,11 +52,12 @@ while True:
             
         # transformer based calibration
         # lmList = inf.cali_predict(lmList)
-        print(max(lmList))
+        # print(max(lmList))
         lmList = cali_inf.inf(lmList, img)
         for idx, lm in enumerate(lmList):
             data.extend([lm[0], h - lm[1], lm[2]])
-        sock.sendto(str.encode(str(data)), serverAddressPort)
+        label = clf.predict(np.array([data]))
+        sock.sendto(str.encode(str(data)+label[0]), serverAddressPort)
 
     # Display
     

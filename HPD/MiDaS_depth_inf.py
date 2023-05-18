@@ -40,40 +40,40 @@ class MiDaS_based_inf:
         return lmList
         
         
-midas = torch.hub.load('intel-isl/MiDaS', 'MiDaS_small')
-midas.to('cuda')
-midas.eval()
-# Input transformation pipeline
-transforms = torch.hub.load('intel-isl/MiDaS', 'transforms')
-transform = transforms.small_transform
+# midas = torch.hub.load('intel-isl/MiDaS', 'MiDaS_small')
+# midas.to('cuda')
+# midas.eval()
+# # Input transformation pipeline
+# transforms = torch.hub.load('intel-isl/MiDaS', 'transforms')
+# transform = transforms.small_transform
 
-cap = cv2.VideoCapture(0)
-while cap.isOpened():
-    ret, frame = cap.read()
+# cap = cv2.VideoCapture(0)
+# while cap.isOpened():
+#     ret, frame = cap.read()
     
-    img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    imgbatch = transform(img).to('cuda')
+#     img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+#     imgbatch = transform(img).to('cuda')
     
-    with torch.no_grad():
-        prediction = midas(imgbatch)
-        prediction = torch.nn.functional.interpolate(
-            prediction.unsqueeze(1),
-            size = img.shape[:2],
-            mode = 'bicubic',
-            align_corners=False,
+#     with torch.no_grad():
+#         prediction = midas(imgbatch)
+#         prediction = torch.nn.functional.interpolate(
+#             prediction.unsqueeze(1),
+#             size = img.shape[:2],
+#             mode = 'bicubic',
+#             align_corners=False,
             
-        ).squeeze()
+#         ).squeeze()
         
-        output = prediction.cpu().numpy()
-    cv2.imshow('CV2Frame', frame)
-    plt.imshow(output)
+#         output = prediction.cpu().numpy()
+#     cv2.imshow('CV2Frame', frame)
+#     plt.imshow(output)
     
-    plt.pause(0.00001)
-    # cv2.imshow('CV2Frame', frame)
-    # print(output)
+#     plt.pause(0.00001)
+#     # cv2.imshow('CV2Frame', frame)
+#     # print(output)
     
-    if cv2.waitKey(10) & 0xFF == ord('q'):
-        cap.release()
-        cv2.destroyAllWindows()
+#     if cv2.waitKey(10) & 0xFF == ord('q'):
+#         cap.release()
+#         cv2.destroyAllWindows()
 
-plt.show()
+# plt.show()
