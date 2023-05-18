@@ -4,6 +4,5 @@ HandTrackingWithUnity-Mediapipe-Unity
 *.pth
 *.pkl
 *.docx
-*.txt
 *.pyc
 /DepthEstimator

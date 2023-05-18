@@ -1,0 +1,8 @@
+hand pose detection based remote control
+https://blog.csdn.net/dgvv4/article/details/122082894
+https://blog.csdn.net/kalakalabala/article/details/121530651
+https://github.com/google/mediapipe
+
+object detection aimming assistant
+https://github.com/chaoyu1999/FPSAutomaticAiming
+https://www.bilibili.com/video/BV1p84y1L733/?vd_source=fc75e889b9989434199ca493e5222438
