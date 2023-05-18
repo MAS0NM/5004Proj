@@ -5,7 +5,7 @@ from sklearn.metrics import accuracy_score
 import os
 import joblib
 from sklearn import datasets
-data_size = 20
+data_size = 40
 folder_path = 'HandPose'
 files = [cls.replace('.txt', '') \
     for cls in os.listdir(path=folder_path) \
