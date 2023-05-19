@@ -41,10 +41,14 @@ while True:
         # handpose based calibrator
         lmList = cali_pos.inf(lmList)
         # will be extended to 21 x 4 with an additional distance on the rear
-        lmList = cali_inf.inf(lmList)
-        for idx, lm in enumerate(lmList):
+        lmList, dis_cm = cali_inf.inf(lmList)
+        for lm in lmList:
             data.extend([lm[0], h - lm[1], lm[2]])
         label = clf.predict(np.array([data]))
+        data = []
+        for lm in lmList:
+            data.extend([lm[0], h - lm[1], lm[2], dis_cm])
+        # print(data)
         sock.sendto(str.encode(str(data)+label[0]), serverAddressPort)
 
     # Display

@@ -69,11 +69,10 @@ class lengthBased_inf:
                     z2 = sign * int(math.sqrt(sqr)) + z1
                 depth.append(z2)
                 idx += 1
-        for idx, lm in enumerate(lmList):
+        # for idx, lm in enumerate(lmList):
             # if idx == 0:
             #     lmList[idx][0] += dis
             # elif idx >= 1:
             #     lmList[idx][2] += depth[idx-1] + dis
-            lmList[idx].append(dis_cm)
         # print(lmList)
-        return lmList
+        return lmList, dis_cm

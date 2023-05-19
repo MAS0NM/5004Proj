@@ -27,10 +27,10 @@ class depthBased_inf:
                 self.infer.len_cali_setup(lmList)
                 self.counter += 1
                 print(self.counter)
-                return lmList
+                return lmList, 0
             else:
-                lmList = self.infer.len_cali(lmList)
-                return lmList
+                lmList, dis_cm = self.infer.len_cali(lmList)
+                return lmList, dis_cm
             
         elif self.mode == 'handpose_based':
             lmList = self.infer.cali_predict(lmList)
