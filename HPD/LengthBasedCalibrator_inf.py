@@ -59,7 +59,7 @@ class lengthBased_inf:
             for i in range(len(l)-1):
                 x1, y1, z1 = lmList[l[i]]
                 x2, y2, z2 = lmList[l[i+1]]
-                dis, _, scale = self.cal_dis(lmList)
+                dis, dis_cm, scale = self.cal_dis(lmList)
                 cor_length = self.hand_standard[idx]
                 cur_length = scale*cor_length
                 # print(rate)
@@ -70,9 +70,10 @@ class lengthBased_inf:
                 depth.append(z2)
                 idx += 1
         for idx, lm in enumerate(lmList):
-            if idx == 0:
-                lmList[idx][0] += dis
-            elif idx >= 1:
-                lmList[idx][2] += depth[idx-1] + dis
-                
+            # if idx == 0:
+            #     lmList[idx][0] += dis
+            # elif idx >= 1:
+            #     lmList[idx][2] += depth[idx-1] + dis
+            lmList[idx].append(dis_cm)
+        # print(lmList)
         return lmList

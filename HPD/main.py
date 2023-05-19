@@ -3,7 +3,6 @@
 from cvzone.HandTrackingModule import HandDetector
 import cv2
 import socket
-import math
 import numpy as np
 from LengthBasedCalibrator_inf import lengthBased_inf
 from HandPoseBasedCalibrator_inf import handPoseBased_inf
@@ -24,8 +23,10 @@ counter = 0
 # inf = inference()
 
 calibrator = 'length_based'
-# calibrator = 'length_based'
+# calibrator that is based on the finger length and the distance
 cali_inf = depthBased_inf(mode=calibrator)
+# calibrator based on the handpose
+cali_pos = depthBased_inf(mode='handpose_based')
 clf = joblib.load('svm_clf.pkl')
 while True:
     # Get image frame
@@ -35,25 +36,12 @@ while True:
     data = []
 
     if hands:
-        # Hand 1
-        hand = hands[0]
-        lmList = hand["lmList"]  # List of 21 Landmark points
-        # depth enhance
+        # raw data, 21 x 3
         lmList = hands[0]['lmList']
-        
-        # fixed length based calibration
-        # cali.len_cali_setup(lmList)
-        # if counter < 60:
-        #     cali.len_cali_setup(lmList)
-        #     counter += 1
-        #     print(counter)
-        # else:
-        #     lmList = cali.len_cali(lmList)
-            
-        # transformer based calibration
-        # lmList = inf.cali_predict(lmList)
-        # print(max(lmList))
-        lmList = cali_inf.inf(lmList, img)
+        # handpose based calibrator
+        lmList = cali_pos.inf(lmList)
+        # will be extended to 21 x 4 with an additional distance on the rear
+        lmList = cali_inf.inf(lmList)
         for idx, lm in enumerate(lmList):
             data.extend([lm[0], h - lm[1], lm[2]])
         label = clf.predict(np.array([data]))

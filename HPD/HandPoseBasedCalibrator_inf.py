@@ -60,4 +60,4 @@ class handPoseBased_inf:
                 
         return lmList_res
 
-        print('Prediction:', prediction)
+        # print('Prediction:', prediction)

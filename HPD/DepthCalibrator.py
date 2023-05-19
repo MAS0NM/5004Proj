@@ -20,7 +20,7 @@ class depthBased_inf:
             
         return cali
     
-    def inf(self, lmList, img):
+    def inf(self, lmList, img=None):
         # print(lmList)
         if self.mode == 'length_based':
             if self.counter < 60:
